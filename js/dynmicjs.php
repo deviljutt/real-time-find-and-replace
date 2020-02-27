@@ -7,7 +7,7 @@ $pages = get_pages($args);
 ?>	
 <script>
 jQuery(document).ready(function($) {
-    var counter = jQuery('#id').val();
+    var counter = jQuery('.findif').html();
 
     $("#addrow").on("click", function () {
         var newRow = $("<tr>");
@@ -26,7 +26,7 @@ jQuery(document).ready(function($) {
         cols += '<td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
         newRow.append(cols);
         $("table.order-list").append(newRow);
-		counter = (counter - 1) + 2;
+		counter = (counter4 - 1) + 2;
 		document.getElementById("id").value = counter;
     });
     $("table.order-list").on("click", ".ibtnDel", function (event) {

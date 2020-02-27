@@ -39,35 +39,43 @@ include( plugin_dir_path( __FILE__ ) . 'js/dynmicjs.php');
 			$i = 0;
 			$far_settings = get_option( 'far_plugin_settings' ); 
 
-			
+			print_r($far_settings);
 			
 	foreach ( $far_settings["search"] as $key => $find ){
-		
-		echo "</br></br>";
-		print_r($far_settings);
-		echo "</br></br>";
-
-echo "<div class='findif' id='id'>44</div>";
+	
+	
+	$args = array(
+    'sort_column' => 'post_title',
+    'post_type' => 'page',
+    'post_status' => 'publish'
+); 
+$pages = get_pages($args);
 
 		$searchfield = $far_settings["search"][$i];
 		$replacefield = $far_settings["replace"][$i];
 		$selectpage = $far_settings["page"][$i];
-		var_dump($selectpage);		
 
 				
-		$cols = '<tr ><td><textarea  class="form-control" name="search" />'.$searchfield.'</textarea></td>';
-        $cols.= '<td><textarea  class="form-control" name="replace"/>'.$replacefield.'</textarea></td>';			
-	   $cols.= '
+		$cols = '<tr ><td><textarea  class="form-control" name="search['.$i.']" />'.$searchfield.'</textarea></td>';
+        $cols.= '<td><textarea  class="form-control" name="replace['.$i.']"/>'.$replacefield.'</textarea></td>';			
+	   $cols.= '<td>';
+	   
+	   
+	   $cols.='<select name="page['.$i.']">	';
 
-	   <td>
+		foreach ($pages as $page) 
+		
+		{
+			
+		$title = $page->post_title;
+		
+		$id = $page->ID; 
+		
+		echo "<option value='.$id.'>.$title.</option>";
+
+		}
 	   
-	   <select name="page'.$i.'">
-	   
-	   <option value="1">All Page</option>
-	   <option value="2">1</option>
-	   <option value="3">2</option>
-	   
-	   </select>';
+		$cols.='</select>';
 		
 		$cols .= '<td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
 
@@ -82,6 +90,8 @@ echo "<div class='findif' id='id'>44</div>";
 		$i = $i + 1;
 		echo "</tr>";
 			}
+			
+			echo "<div class='findif' id='id' style='display:none'>".$i."</div>";
 	
 				?>
 	
